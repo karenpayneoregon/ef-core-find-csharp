@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindUnitTest", "FindUnitTes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1AD917BD-4665-4321-9A76-F09989BF414A}"
 	ProjectSection(SolutionItems) = preProject
-		..\NorthWind2020\North2020Script.sql = ..\NorthWind2020\North2020Script.sql
+		NorthWind2020Script.sql = NorthWind2020Script.sql
 		readme.md = readme.md
 	EndProjectSection
 EndProject

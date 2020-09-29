@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NorthEntityLibrary.Classes;
 using NorthEntityLibrary.Models;
 using NorthEntityLibrary.Repositories;
+using Shouldly;
 
 namespace FindUnitTest
 {
@@ -25,8 +26,8 @@ namespace FindUnitTest
         {
             var employee = await EmployeeOperations.FindEmployeesAsync(new object[] { 3 });
 
-            Assert.AreEqual(employee.FirstName, "Janet");
-            Assert.AreEqual(employee.LastName, "Leverling");
+            employee.FirstName.ShouldBe("Janet");
+            employee.LastName.ShouldBe("Leverling");
 
         }
 
@@ -44,25 +45,25 @@ namespace FindUnitTest
                 "ContactTypeIdentifierNavigation"
             });
 
-            Assert.IsTrue(
-                customer.CountryIdentifierNavigation != null &&
-                customer.ContactTypeIdentifierNavigation != null);
+            customer.CountryIdentifierNavigation.ShouldNotBeNull();
+            customer.ContactTypeIdentifierNavigation.ShouldNotBeNull();
 
             // get customer w/o any navigation properties
             customer = await CustomerOperations.Get(3);
 
-            Assert.AreEqual(customer.CompanyName, "Antonio Moreno Taquería");
+            
+            customer.CompanyName.ShouldBe("Antonio Moreno Taquería");
 
             // get customer with all navigation properties
             customer = await CustomerOperations.GetWithAllNavigationProperties(3);
 
-            Assert.IsTrue(
-                customer.CountryIdentifierNavigation != null &&
-                customer.ContactTypeIdentifierNavigation != null &
-                customer.Orders != null &&
-                customer.Contact != null);
 
+            customer.CountryIdentifierNavigation.ShouldNotBeNull();
+            customer.ContactTypeIdentifierNavigation.ShouldNotBeNull();
+            customer.Orders.ShouldNotBeNull();
+            customer.Contact.ShouldNotBeNull();
 
+            
         }
         /// <summary>
         /// Find with navigation(s) and without navigation properties
@@ -78,23 +79,22 @@ namespace FindUnitTest
                 "CountryIdentifierNavigation"
             });
 
-            Assert.IsTrue(
-                employee.CountryIdentifierNavigation != null &&
-                employee.ContactTypeIdentifierNavigation != null);
+
+            employee.CountryIdentifierNavigation.ShouldNotBeNull();
+            employee.ContactTypeIdentifierNavigation.ShouldNotBeNull();
 
             // get customer w/o any navigation properties
             employee = await EmployeeOperations.Get(3);
 
-            Assert.AreEqual(employee.FirstName, "Janet");
-            Assert.AreEqual(employee.LastName, "Leverling");
+            employee.FirstName.ShouldBe("Janet");
+            employee.LastName.ShouldBe("Leverling");
 
             // get customer with all navigation properties
             employee = await EmployeeOperations.GetWithAllNavigationProperties(3);
 
-            Assert.IsTrue(
-                employee.CountryIdentifierNavigation != null &&
-                employee.ContactTypeIdentifierNavigation != null &
-                employee.Orders != null);
+            employee.CountryIdentifierNavigation.ShouldNotBeNull();
+            employee.ContactTypeIdentifierNavigation.ShouldNotBeNull();
+            employee.Orders.ShouldNotBeNull();
 
         }
 
@@ -107,9 +107,9 @@ namespace FindUnitTest
         {
             var customer = await CustomerOperations.GenericRepositoryFindAsync(3, new []{ "Contact" });
 
-            Assert.AreEqual(customer.CompanyName, "Antonio Moreno Taquería");
+            customer.CompanyName.ShouldBe("Antonio Moreno Taquería");
+            customer.Contact.ShouldNotBeNull();
 
-            Assert.IsTrue(customer.Contact != null);
         }
         /// <summary>
         /// Test generic FindAsync for Employee
@@ -124,8 +124,8 @@ namespace FindUnitTest
                 "ContactTypeIdentifierNavigation"
             });
 
-            Assert.IsTrue(employee.ContactTypeIdentifierNavigation != null &&
-                          employee.CountryIdentifierNavigation != null);
+            employee.CountryIdentifierNavigation.ShouldNotBeNull();
+            employee.ContactTypeIdentifierNavigation.ShouldNotBeNull();
 
         }
 
@@ -134,9 +134,9 @@ namespace FindUnitTest
         {
             var employee = await EmployeeOperations.GenericRepositoryFindWithIncludesAsync(3);
 
-            Assert.IsTrue(
-                employee.CountryIdentifierNavigation != null &&
-                employee.ContactTypeIdentifierNavigation != null && employee.Orders != null);
+            employee.CountryIdentifierNavigation.ShouldNotBeNull();
+            employee.ContactTypeIdentifierNavigation.ShouldNotBeNull();
+            employee.Orders.ShouldNotBeNull();
 
         }
         [TestMethod, TestTraits(Trait.FindGeneric)]
@@ -144,11 +144,10 @@ namespace FindUnitTest
         {
             var customer = await CustomerOperations.GenericRepositoryFindWithIncludesAsync(3);
 
-            Assert.IsTrue(
-                customer.CountryIdentifierNavigation != null &&
-                customer.ContactTypeIdentifierNavigation != null && 
-                customer.Contact != null &&
-                customer.Orders != null);
+            customer.CountryIdentifierNavigation.ShouldNotBeNull();
+            customer.Contact.ShouldNotBeNull();
+            customer.ContactTypeIdentifierNavigation.ShouldNotBeNull();
+            customer.Orders.ShouldNotBeNull();
 
         }
 
@@ -157,11 +156,10 @@ namespace FindUnitTest
         {
             var order = await OrdersOperations.GenericRepositoryFindWithIncludesAsync(10249);
 
-            Assert.IsTrue(
-                order.CustomerIdentifierNavigation != null &&
-                order.Employee != null &&
-                order.OrderDetails != null &&
-                order.ShipViaNavigation != null);
+            order.CustomerIdentifierNavigation.ShouldNotBeNull();
+            order.OrderDetails.ShouldNotBeNull();
+            order.Employee.ShouldNotBeNull();
+            order.ShipViaNavigation.ShouldNotBeNull();
 
         }
         [TestMethod, TestTraits(Trait.FindGeneric)]
@@ -174,9 +172,10 @@ namespace FindUnitTest
                 "Employee"
             });
 
-            Assert.IsTrue(order.Employee != null &&
-                          order.CustomerIdentifierNavigation != null && 
-                          order.ShipViaNavigation != null);
+
+            order.CustomerIdentifierNavigation.ShouldNotBeNull();
+            order.Employee.ShouldNotBeNull();
+            order.ShipViaNavigation.ShouldNotBeNull();
 
         }
 
@@ -195,6 +194,8 @@ namespace FindUnitTest
                 customers => customers.Contact,
                 customers => customers.ContactTypeIdentifierNavigation,
                 customers => customers.CountryIdentifierNavigation);
+
+            
         }
         /// <summary>
         /// Not a true test, simply a demonstration for a generic find all

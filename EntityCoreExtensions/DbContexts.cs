@@ -127,14 +127,14 @@ namespace EntityCoreExtensions
 
             foreach (IProperty itemProperty in properties)
             {
-                var sqlColumn = new ModelComment
+                var modelComment = new ModelComment
                 {
                     Name = itemProperty.Name,
                     Comment = context.Model.FindEntityType(entityType).FindProperty(itemProperty.Name).GetComment() ?? itemProperty.Name
                 };
 
 
-                commentList.Add(sqlColumn);
+                commentList.Add(modelComment);
 
             }
 

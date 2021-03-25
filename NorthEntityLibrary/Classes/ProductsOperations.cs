@@ -88,7 +88,7 @@ namespace NorthEntityLibrary.Classes
 
         }
         /// <summary>
-        /// Get single Customers with no navigation properties
+        /// Get single Product with no navigation properties
         /// </summary>
         /// <param name="keys">primary key to locate by</param>
         /// <returns>Employees if found, null if not found</returns>

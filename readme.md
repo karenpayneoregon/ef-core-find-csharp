@@ -4,6 +4,8 @@
 
 Code samples for using [.Find method](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.dbcontext.find?view=efcore-3.1) for Entity Framework Core.
 
+See also [repository for .NET Core](https://github.com/karenpayneoregon/moving-to-net5-version1)
+
 <table width="800px">
     <tr>
         <th></th>
